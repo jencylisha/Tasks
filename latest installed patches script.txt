@@ -1,0 +1,9 @@
+#To display all installed patches
+Get-Hotfix
+
+#To check latest installed patches
+(Get-HotFix | Sort InstalledOn)[-1] 
+ 
+   
+#To list the patches installed in last 5 days 
+ Get-CimInstance -Class win32_quickfixengineering | Where-Object {( $_.InstalledOn -gt (Get-Date).AddDays(-5)) -and ( $_.InstalledOn -lt (Get-Date).Date) }  

@@ -1,0 +1,14 @@
+#Create a variable and store the action performed
+  $action = New-ScheduledTaskAction -Execute '%windir%\system32\win32calc.exe' -Argument 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Accessories' 
+
+#Trigger the task at the scheduled time
+  $trigger = New-ScheduledTaskTrigger -Daily -At 12:15pm 
+
+  try {         
+    
+        Register-ScheduledTask -Action $action -Trigger $trigger -TaskPath "%windir%\system32\win32calc.exe" -TaskName "calculator"    
+      } 
+  catch {        
+    
+        Write-Host("Program not found") 
+        }  
