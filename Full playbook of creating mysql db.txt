@@ -1,0 +1,51 @@
+Installing mysql via yaml script
+================================
+
+---
+- name: install mysql
+  yum:
+    name=mysql state=present
+- name: start up the mysql service
+  service:
+    name: start the service state=present enabled=true
+
+
+
+Creating database
+==================
+
+
+- name: Create mysql database
+
+  mysql_db:
+
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    name: sample_db1
+
+    state: present
+
+
+Creating table
+==============
+
+
+---
+- name: Creating table
+  hosts: localhost
+  tasks: 
+    - name: tables
+      command: mysql sample_db1 --skip-column-names --execute "create table demo4 (Name varchar(255), EmpID INT NOT NULL)"
+
+
+main playbook
+=============
+
+
+---
+- name: creating db
+  hosts: localhost
+  tasks: 
+      - include_role: 
+          name: jency
+
